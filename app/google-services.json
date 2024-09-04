@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "556647825915",
+    "project_id": "mobiljava23",
+    "storage_bucket": "mobiljava23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556647825915:android:6bbefb197cab04365f8b5e",
+        "android_client_info": {
+          "package_name": "se.gritacademy.getakelemwork.dataandcheck"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF71hbSfQitFLdhUfvEBJH1OCYjlZ-jE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556647825915:android:15364792a759e3d05f8b5e",
+        "android_client_info": {
+          "package_name": "se.gritacademy.getakelemwork.firebasekotlin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF71hbSfQitFLdhUfvEBJH1OCYjlZ-jE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556647825915:android:5eb3e602a187ba2f5f8b5e",
+        "android_client_info": {
+          "package_name": "se.gritacademy.getakelemwork.lifecyclepurekotlinv4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF71hbSfQitFLdhUfvEBJH1OCYjlZ-jE8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
