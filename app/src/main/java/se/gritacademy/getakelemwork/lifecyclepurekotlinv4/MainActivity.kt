@@ -19,18 +19,26 @@ class MainActivity : AppCompatActivity() {
     var db = Firebase.firestore
     lateinit var et:EditText
     lateinit var et2:EditText
+    lateinit var etMail:EditText
+    lateinit var ettele:EditText
     lateinit var btn:Button
     lateinit var btn2:Button
     lateinit var showtimebtn:Button
     private val PREFS_NAME: String = "preferences"
     private val PREF_UNAME: String = "Username"
     private val PREF_PASSWORD: String = "Password"
+    private val PREF_EMAIL: String = "Email"
+    private val PREF_PHONE: String = "Phone"
 
     private val DefaultUnameValue = ""
     private var UnameValue: String? = null
 
     private val DefaultPasswordValue = ""
     private var PasswordValue: String? = null
+    private val DefaultEmailValue = ""
+    private var EmailValue: String? = null
+    private val DefaultPhoneValue = ""
+    private var PhoneValue: String? = null
     override fun onStart() {
         super.onStart()
 
@@ -53,10 +61,14 @@ class MainActivity : AppCompatActivity() {
         // Edit and commit
         UnameValue = et.getText().toString()
         PasswordValue = et2.getText().toString()
-        System.out.println("onPause save name: $UnameValue")
-        System.out.println("onPause save password: $PasswordValue")
+        EmailValue = etMail.getText().toString()
+        PhoneValue = ettele.getText().toString()
+        println("onPause save name: $UnameValue")
+        println("onPause save password: $PasswordValue")
         editor.putString(PREF_UNAME, UnameValue)
         editor.putString(PREF_PASSWORD, PasswordValue)
+        editor.putString(PREF_EMAIL, EmailValue)
+        editor.putString(PREF_PHONE, PhoneValue)
         editor.commit()
     }
     private fun loadPreferences() {
@@ -69,10 +81,16 @@ class MainActivity : AppCompatActivity() {
         // Get value
         UnameValue = settings.getString(PREF_UNAME, DefaultUnameValue)
         PasswordValue = settings.getString(PREF_PASSWORD, DefaultPasswordValue)
+        EmailValue = settings.getString(PREF_EMAIL, DefaultEmailValue)
+        PhoneValue = settings.getString(PREF_PHONE, DefaultPhoneValue)
         et.setText(UnameValue)
         et2.setText(PasswordValue)
+        etMail.setText(EmailValue)
+        ettele.setText(PhoneValue)
         println("onResume load name: $UnameValue")
         println("onResume load password: $PasswordValue")
+        println("onResume load email: $EmailValue")
+        println("onResume load phone: $PhoneValue")
     }
 
    // var et2 = findViewById<EditText>(R.id.editTextTextPassword)
@@ -83,6 +101,8 @@ class MainActivity : AppCompatActivity() {
 
         et = findViewById<EditText>(R.id.Username)
        et2 = findViewById<EditText>(R.id.editTextTextPassword)
+       etMail = findViewById<EditText>(R.id.editTextTextEmailAddress)
+       ettele = findViewById<EditText>(R.id.editTextPhone)
        btn = findViewById<Button>(R.id.submitbtn)
        btn2 = findViewById<Button>(R.id.loginbtn)
        showtimebtn = findViewById(R.id.showtimebtn)
@@ -113,16 +133,35 @@ class MainActivity : AppCompatActivity() {
         val user = hashMapOf(
             "username" to et.text.toString(),
             "password" to et2.text.toString(),
+            "Email" to etMail.text.toString(),
+            "Phone" to ettele.text.toString()
         )
 
-// Add a new document with a generated ID
         db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+            .whereEqualTo( "Email",etMail.text.toString()) //et.text.toString()
+            //.whereEqualTo( et2.text.toString(),true)
+            .get()
+            .addOnSuccessListener { documents ->
+                run {
+
+                    if (documents.size() == 0){
+                        Log.i("alrik", "IT is unik")
+                        // Add a new document with a generated ID
+                        db.collection("users")
+                            .add(user)
+                            .addOnSuccessListener { documentReference ->
+                                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w(TAG, "Error adding document", e)
+                            }
+                    }
+                }
+
+
             }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
+            .addOnFailureListener { exception ->
+                Log.w("ERRORME", "Error getting documents: ", exception)
             }
     }
     fun read(){

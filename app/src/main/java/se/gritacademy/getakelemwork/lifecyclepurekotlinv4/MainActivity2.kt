@@ -12,6 +12,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import kotlin.math.log
 
 class MainActivity2 : AppCompatActivity() {
     var db = Firebase.firestore
@@ -49,8 +50,8 @@ class MainActivity2 : AppCompatActivity() {
         // Edit and commit
         UnameValue = et.getText().toString()
         PasswordValue = et2.getText().toString()
-        System.out.println("onPause save name: $UnameValue")
-        System.out.println("onPause save password: $PasswordValue")
+        println("onPause save name: $UnameValue")
+        println("onPause save password: $PasswordValue")
         editor.putString(PREF_UNAME, UnameValue)
         editor.putString(PREF_PASSWORD, PasswordValue)
         editor.commit()
@@ -79,7 +80,6 @@ class MainActivity2 : AppCompatActivity() {
         btn = findViewById(R.id.submitloginbtn)
         btn.setOnClickListener {
             login()
-            read()
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -88,33 +88,28 @@ class MainActivity2 : AppCompatActivity() {
         }
     }
     fun login(){
+        Log.i("alrik", "login: HEHREHREHHREHRHER")
         db.collection("users")
-            .whereEqualTo( et.text.toString(),true)
+            .whereEqualTo( "Email","example@gmail.com") //et.text.toString()
+            //.whereEqualTo( et2.text.toString(),true)
             .get()
             .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    Log.d("Killme", "${document.id} => ${document.data}" + "HEIUJJIFNUENFJK")
+                run {
+
+                    Log.i("alrik", "login: ")
+                    for (document in documents) {
+                        Log.d("alrik", "${document.id} => ${document.data["password"].toString()}")
+                        if (document.data["password"].toString() == et2.text.toString())
+                        Log.i("alrik", "login: MATCHING PASSWORD")
+                        else Log.i("alrik", "login:  ${document.data["password"].toString()} "+et2.text.toString())
+                    }
+
                 }
+
+
             }
             .addOnFailureListener { exception ->
                 Log.w("ERRORME", "Error getting documents: ", exception)
-            }
-    }
-
-    fun write(){
-        val user = hashMapOf(
-            "username" to et.text.toString(),
-            "password" to et2.text.toString(),
-        )
-
-// Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(TAG, "Error adding document", e)
             }
     }
     fun read(){
