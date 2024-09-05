@@ -2,7 +2,6 @@ package se.gritacademy.getakelemwork.lifecyclepurekotlinv4
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -14,14 +13,11 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
-
-class MainActivity : AppCompatActivity() {
+class MainActivity2 : AppCompatActivity() {
     var db = Firebase.firestore
-    lateinit var et:EditText
-    lateinit var et2:EditText
-    lateinit var btn:Button
-    lateinit var btn2:Button
-    lateinit var showtimebtn:Button
+    private lateinit var et:EditText
+    private lateinit var et2:EditText
+    private lateinit var btn:Button
     private val PREFS_NAME: String = "preferences"
     private val PREF_UNAME: String = "Username"
     private val PREF_PASSWORD: String = "Password"
@@ -74,41 +70,37 @@ class MainActivity : AppCompatActivity() {
         println("onResume load name: $UnameValue")
         println("onResume load password: $PasswordValue")
     }
-
-   // var et2 = findViewById<EditText>(R.id.editTextTextPassword)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-
-        et = findViewById<EditText>(R.id.Username)
-       et2 = findViewById<EditText>(R.id.editTextTextPassword)
-       btn = findViewById<Button>(R.id.submitbtn)
-       btn2 = findViewById<Button>(R.id.loginbtn)
-       showtimebtn = findViewById(R.id.showtimebtn)
-       btn.setOnClickListener({
-           write()
-       })
-    btn2.setOnClickListener({
-        val i = Intent(
-            this@MainActivity,
-            MainActivity2::class.java
-        )
-        i.putExtra("Key", et.text.toString())
-        startActivity(i)
-   })  //et.text.toString()
-       showtimebtn.setOnClickListener({
-           val showtime = Intent(
-               this@MainActivity,MainActivity3::class.java
-           )
-           startActivity(showtime)
-       })
+        setContentView(R.layout.activity_main2)
+        et = findViewById<EditText>(R.id.etuserlogin)
+        et2 = findViewById<EditText>(R.id.etpasswordlogin)
+        btn = findViewById(R.id.submitloginbtn)
+        btn.setOnClickListener {
+            login()
+            read()
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
+    fun login(){
+        db.collection("users")
+            .whereEqualTo( et.text.toString(),true)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Log.d("Killme", "${document.id} => ${document.data}" + "HEIUJJIFNUENFJK")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("ERRORME", "Error getting documents: ", exception)
+            }
+    }
+
     fun write(){
         val user = hashMapOf(
             "username" to et.text.toString(),
