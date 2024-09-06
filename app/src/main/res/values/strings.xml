@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">LifeCyclePureKotlinV4</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+        <string-array name="MenuService">
+            <item>login</item>
+            <item>register</item>
+            <item>Showtime</item>
+        </string-array>
 </resources>

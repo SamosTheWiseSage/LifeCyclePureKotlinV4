@@ -17,6 +17,10 @@ import com.google.firebase.firestore.firestore
 
 class MainActivity : AppCompatActivity() {
     var db = Firebase.firestore
+    companion object{
+     lateinit var docmentGlobalid: String
+    }
+
     lateinit var et:EditText
     lateinit var et2:EditText
     lateinit var etMail:EditText
@@ -98,7 +102,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-
         et = findViewById<EditText>(R.id.Username)
        et2 = findViewById<EditText>(R.id.editTextTextPassword)
        etMail = findViewById<EditText>(R.id.editTextTextEmailAddress)
@@ -150,6 +153,11 @@ class MainActivity : AppCompatActivity() {
                         db.collection("users")
                             .add(user)
                             .addOnSuccessListener { documentReference ->
+                                docmentGlobalid  = documentReference.id
+                                val showtime = Intent(
+                                    this@MainActivity,MainActivity3::class.java
+                                )
+                                startActivity(showtime)
                                 Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                             }
                             .addOnFailureListener { e ->
@@ -177,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
     fun delete(){
-        db.collection("cities").document("DC")
+        db.collection("users").document(docmentGlobalid)
             .delete()
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully deleted!") }
             .addOnFailureListener { e -> Log.w(TAG, "Error deleting document", e) }

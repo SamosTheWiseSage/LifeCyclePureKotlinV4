@@ -7,51 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity3">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <Button
+        android:id="@+id/gotToReg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="RegisterAccount"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.149"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.455"
-        app:srcCompat="@mipmap/ic_launcher_foreground" />
+        app:layout_constraintVertical_bias="0.083" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/goToLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LogoutFrag"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.137" />
+        android:layout_marginTop="34dp"
+        android:text="Logout"
+        app:layout_constraintEnd_toEndOf="@+id/gotToReg"
+        app:layout_constraintTop_toBottomOf="@+id/gotToReg" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/changeDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RegstratFrag"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.537"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="41dp"
+        android:text="ChangeAccountDetails"
+        app:layout_constraintStart_toStartOf="@+id/goToLogout"
+        app:layout_constraintTop_toBottomOf="@+id/goToLogout" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.693" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@ package se.gritacademy.getakelemwork.lifecyclepurekotlinv4
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -12,7 +13,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
-import kotlin.math.log
 
 class MainActivity2 : AppCompatActivity() {
     var db = Firebase.firestore
@@ -20,11 +20,11 @@ class MainActivity2 : AppCompatActivity() {
     private lateinit var et2:EditText
     private lateinit var btn:Button
     private val PREFS_NAME: String = "preferences"
-    private val PREF_UNAME: String = "Username"
+    private val PREF_EMAIL: String = "Email"
     private val PREF_PASSWORD: String = "Password"
 
-    private val DefaultUnameValue = ""
-    private var UnameValue: String? = null
+    private val DefaultEmailValue = ""
+    private var EmailValue: String? = null
 
     private val DefaultPasswordValue = ""
     private var PasswordValue: String? = null
@@ -48,11 +48,11 @@ class MainActivity2 : AppCompatActivity() {
         val editor = settings.edit()
 
         // Edit and commit
-        UnameValue = et.getText().toString()
+        EmailValue = et.getText().toString()
         PasswordValue = et2.getText().toString()
-        println("onPause save name: $UnameValue")
+        println("onPause save name: $EmailValue")
         println("onPause save password: $PasswordValue")
-        editor.putString(PREF_UNAME, UnameValue)
+        editor.putString(PREF_EMAIL, EmailValue)
         editor.putString(PREF_PASSWORD, PasswordValue)
         editor.commit()
     }
@@ -64,18 +64,18 @@ class MainActivity2 : AppCompatActivity() {
 
 
         // Get value
-        UnameValue = settings.getString(PREF_UNAME, DefaultUnameValue)
+        EmailValue = settings.getString(PREF_EMAIL, DefaultEmailValue)
         PasswordValue = settings.getString(PREF_PASSWORD, DefaultPasswordValue)
-        et.setText(UnameValue)
+        et.setText(EmailValue)
         et2.setText(PasswordValue)
-        println("onResume load name: $UnameValue")
+        println("onResume load name: $EmailValue")
         println("onResume load password: $PasswordValue")
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main2)
-        et = findViewById<EditText>(R.id.etuserlogin)
+        et = findViewById<EditText>(R.id.editTextTextEmailAddress2)
         et2 = findViewById<EditText>(R.id.etpasswordlogin)
         btn = findViewById(R.id.submitloginbtn)
         btn.setOnClickListener {
@@ -90,7 +90,7 @@ class MainActivity2 : AppCompatActivity() {
     fun login(){
         Log.i("alrik", "login: HEHREHREHHREHRHER")
         db.collection("users")
-            .whereEqualTo( "Email","example@gmail.com") //et.text.toString()
+            .whereEqualTo( "Email",et.text.toString()) //et.text.toString()
             //.whereEqualTo( et2.text.toString(),true)
             .get()
             .addOnSuccessListener { documents ->
@@ -99,9 +99,16 @@ class MainActivity2 : AppCompatActivity() {
                     Log.i("alrik", "login: ")
                     for (document in documents) {
                         Log.d("alrik", "${document.id} => ${document.data["password"].toString()}")
-                        if (document.data["password"].toString() == et2.text.toString())
-                        Log.i("alrik", "login: MATCHING PASSWORD")
-                        else Log.i("alrik", "login:  ${document.data["password"].toString()} "+et2.text.toString())
+                        if (document.data["password"].toString() == et2.text.toString()) {
+                            Log.i("alrik", "login: MATCHING PASSWORD")
+                            val showtime = Intent(
+                                this@MainActivity2, MainActivity3::class.java
+                            )
+                            startActivity(showtime)
+                        } else {
+                            Log.i("alrik", "login: FAIL")
+                            Log.i("alrik", "login:  ${document.data["password"].toString()} "+et2.text.toString())
+                        }
                     }
 
                 }
