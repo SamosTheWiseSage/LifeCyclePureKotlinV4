@@ -2,10 +2,12 @@ package se.gritacademy.getakelemwork.lifecyclepurekotlinv4
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -119,8 +121,19 @@ class MainActivity4 : AppCompatActivity() {
         btn = findViewById<Button>(R.id.button)
         btn.setOnClickListener({
         Update()
+            val showtime = Intent(
+                this@MainActivity4,MainActivity3::class.java
+            )
+            startActivity(showtime)
+            Log.i("UPDATE", "COMPLETE UPDATE ")
         })
         btn2 = findViewById<Button>(R.id.button3)
+        btn2.setOnClickListener({
+            val showtime = Intent(
+                this@MainActivity4,MainActivity3::class.java
+            )
+            startActivity(showtime)
+        })
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -129,7 +142,7 @@ class MainActivity4 : AppCompatActivity() {
     }
     fun Update(){
         val updateUser = db.collection("users").document(MainActivity.docmentGlobalid)
-        updateUser.update("Username",et.text.toString(), "password",et2.text.toString(),
+        updateUser.update("username",et.text.toString(), "password",et2.text.toString(),
             "Email",etMail.text.toString(),"Phone",etPhone.text.toString(),
             "Postal",etPostal.text.toString(),"Date",etDate.text.toString())
             .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully updated!") }

@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import se.gritacademy.getakelemwork.lifecyclepurekotlinv4.MainActivity.Companion.docmentGlobalid
 
 class MainActivity2 : AppCompatActivity() {
     var db = Firebase.firestore
@@ -80,6 +81,10 @@ class MainActivity2 : AppCompatActivity() {
         btn = findViewById(R.id.submitloginbtn)
         btn.setOnClickListener {
             login()
+            val showtime = Intent(
+                this@MainActivity2,MainActivity3::class.java
+            )
+            startActivity(showtime)
         }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -99,7 +104,9 @@ class MainActivity2 : AppCompatActivity() {
                     Log.i("alrik", "login: ")
                     for (document in documents) {
                         Log.d("alrik", "${document.id} => ${document.data["password"].toString()}")
+                        docmentGlobalid  = document.id
                         if (document.data["password"].toString() == et2.text.toString()) {
+
                             Log.i("alrik", "login: MATCHING PASSWORD")
                             val showtime = Intent(
                                 this@MainActivity2, MainActivity3::class.java

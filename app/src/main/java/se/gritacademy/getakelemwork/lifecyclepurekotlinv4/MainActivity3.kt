@@ -9,14 +9,31 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity3 : AppCompatActivity() {
-    lateinit var btn2:Button
+    lateinit var ChangeProfile:Button
+    lateinit var btnReg:Button
+    lateinit var btnLogin:Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main3)
-        btn2 = findViewById(R.id.changeDetails)
+        btnReg = findViewById(R.id.gotToReg)
+        btnReg.setOnClickListener({
+            val showtime = Intent(
+                this@MainActivity3,MainActivity::class.java
+            )
+            startActivity(showtime)
+        })
+        btnLogin = findViewById(R.id.goToLogout)
+        btnLogin.setOnClickListener({
+
+            val showtime = Intent(
+                this@MainActivity3,MainActivity2::class.java
+            )
+            startActivity(showtime)
+        })
+        ChangeProfile = findViewById(R.id.changeDetails)
         var clicker = 0
-        btn2.setOnClickListener({
+        ChangeProfile.setOnClickListener({
             val showtime = Intent(
                 this@MainActivity3,MainActivity4::class.java
             )
